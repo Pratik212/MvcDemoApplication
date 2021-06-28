@@ -7,17 +7,16 @@ using System.Threading.Tasks;
 
 namespace DemoApplication.Models
 {
-    public class Item
+    public class Expense
     {
         [Key]
         public int Id { get; set; }
+        [DisplayName("Expense")]
         [Required]
-        public string Borrower { get; set; }
-        [Required]
-        public string Lender { get; set; }
+        public string ExpenseName { get; set; }
 
-        [DisplayName("Item Name")]
         [Required]
-        public string ItemName { get; set; }
+        [Range(1,int.MaxValue , ErrorMessage ="Amount must be greater than 0")]
+        public int Amount { get; set; }
     }
 }
