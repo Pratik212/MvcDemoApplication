@@ -32,6 +32,61 @@ namespace DemoApplication.Controllers
         }
 
 
+
+        //GET Delete 
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var obj = _context.Items.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+
+        //POST Delete 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(int? id)
+        {
+            var obj = _context.Items.Find(id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            _context.Items.Remove(obj);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
+
+
+
+        //GET Update 
+        public IActionResult Update(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var obj = _context.Items.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+
         //POST-Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -40,6 +95,23 @@ namespace DemoApplication.Controllers
             _context.Items.Add(obj);
             _context.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+
+        //POST UPDATE
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(Item obj)
+        {
+
+            if (ModelState.IsValid)
+            {
+                _context.Items.Update(obj);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(obj);
         }
     }
 }
